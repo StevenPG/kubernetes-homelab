@@ -26,14 +26,22 @@ Some of these are old personal machines, others came from eBay or friends of fri
 
 Now onto storage. I picked up a new 2TB 5400RPM WD Red NAS HDD, and a 500GB WD Blue SSD.
 
+Then I opened a drawer I haven't opened in years and found additional drives! Everything is enumerated below:
+
 My total available storage is now the following:
 
 1. 500GB WD Blue SSD (2.5) NEW!
 2. 2TB WD Red HDD (3.5) NEW!
 3. Seagate 750GB Hybrid SSD (2.5) Old laptop!
 4. PNY 250GB SSD (2.5) Old desktop!
+5. 1TB Samsung HDD (2.5)
+6. 750GB HGST 750GB HDD (2.5)
+7. 200GB Toshiba HDD (2.5)
+8. 20GB Seagate HDD (2.5)
 
-That's one per machine! Assuming at least one system is set up and plugged in with network access, we're good to go!
+Leaving me with a grand total of 6 Terabytes!
+
+That's at least one per machine! Assuming at least one system is set up and plugged in with network access, we're good to go!
 
 # Software Preparations
 
