@@ -42,3 +42,20 @@ That's at least one per machine! Assuming at least one system is set up and plug
 We only need one thing to get started, the aforementioned flash drive with ubuntu installed.
 
 I did this using [Rufus](https://rufus.ie/en/) on a Windows computer. I installed [Rufus](https://rufus.ie/en/) and then downloaded [Ubuntu](https://ubuntu.com/download/server)'s latest server distribution. As of writing, that is [22.04.1 LTS](https://discourse.ubuntu.com/t/jammy-jellyfish-release-notes/24668?_ga=2.24881274.1343425226.1665932151-444169069.1665932151).
+
+## Server Names
+
+As they say, the hardest thing about computer science is naming things and off-by-one errors.
+
+But we're going to try to set up the servers with the following hostnames:
+
+- rainbow 
+    - 8 core AMD Bulldozer
+    - hoster of content and doer of things
+- oldie (rename)
+    - i5 6500
+    - doer of things, but less important things
+- school (rename)
+    - School District Desktop
+    - doer of nonimportant things
+- (rename)
