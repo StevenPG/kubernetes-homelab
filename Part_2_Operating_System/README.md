@@ -6,4 +6,20 @@ But it's just a little bit worse now that I have one shared monitor and keyboard
 
 But it must be done, so here we go.
 
-## 
+## Complicated Steps 1-24
+
+For each box, look at the graphics output on the machine.
+
+In my situation, there's anywhere from VGA, DVI-ABC123 or HDMI on the backs of these boxes.
+
+I grabbed a cable for each of those, an old crappy monitor (that only has VGA and DVI-D ports), and plugged them in one at a time until I have a free-hanging cable out of the back of each machine.
+
+With that, I plugged in my trusty USB drive with an installable Ubuntu ISO deployed and ran through the default installation on each node.
+
+## Drives and Data
+
+TODO - Talk about drive configuration across each of the boxes, include steps taken to configure the nodes
+
+TODO - note the creds and names on paper, update hostnames
+
+TODO - rename hostnames
