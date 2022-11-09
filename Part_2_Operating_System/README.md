@@ -16,7 +16,11 @@ I grabbed a cable for each of those, an old crappy monitor (that only has VGA an
 
 With that, I plugged in my trusty USB drive with an installable Ubuntu ISO deployed and ran through the default installation on each node.
 
-## Drives and Data
+## Final System Layout
+
+TODO - list each system here with all of their need-to-know components
+
+## TODO
 
 TODO - Talk about drive configuration across each of the boxes, include steps taken to configure the nodes
 
