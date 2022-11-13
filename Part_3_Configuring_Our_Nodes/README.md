@@ -85,7 +85,10 @@ We're going to execute the following commands in order
 - `sudo apt update`
 - `sudo apt-get update`
 - `sudo apt install ansible`
+- `sudo apt install neofetch`
 
 Once we have Ansible installed, we'll control the majority of our configuration through Ansible modules. We'll also be able to execute these remotely using Ansible if you have a machine set aside to do so. I'm executing all of this mostly from a Windows host, which doesn't natively execute Ansible, so some of this will be copy-pasted onto the machines.
 
 If you have existing nodes or VMs that are running Linux, you can set up an Ansible inventory and execute these configurations.
+
+We're also installing neofetch because it's a clever little way to print out the machine specifications whenever we want to remind ourselves what resources we have available. (That is, until Kube is configured!)
