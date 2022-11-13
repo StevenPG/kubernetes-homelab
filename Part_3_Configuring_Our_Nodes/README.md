@@ -53,17 +53,17 @@ Execute the following command:
 Add the following content into the file
 
     network:
-    version: 2
-    renderer: networkd
-    ethernets:
-        eth0:
-            addresses:
-                - 192.168.1.212/24
-            nameservers:
-                addresses: [8.8.8.8, 8.8.4.4]
-            routes:
-                - to: default
-                  via: 192.168.1.2
+        version: 2
+        renderer: networkd
+        ethernets:
+            eth0:
+                addresses:
+                    - 192.168.1.123/24
+                nameservers:
+                    addresses: [8.8.8.8, 8.8.4.4]
+                routes:
+                    - to: default
+                      via: 192.168.1.1
 
 Then change the following fields:
 
@@ -86,4 +86,6 @@ We're going to execute the following commands in order
 - `sudo apt-get update`
 - `sudo apt install ansible`
 
-Once we have Ansible installed, we'll control the majority of our configuration through Ansible modules. We'll also be able to execute these remotely using Ansible if you have a machine set aside to do so.
+Once we have Ansible installed, we'll control the majority of our configuration through Ansible modules. We'll also be able to execute these remotely using Ansible if you have a machine set aside to do so. I'm executing all of this mostly from a Windows host, which doesn't natively execute Ansible, so some of this will be copy-pasted onto the machines.
+
+If you have existing nodes or VMs that are running Linux, you can set up an Ansible inventory and execute these configurations.
