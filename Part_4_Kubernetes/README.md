@@ -115,7 +115,6 @@ So we'll disable swap using the following
     cat /proc/swaps
     # Remove swap volumes
     vi /etc/fstab
-    
 
 Now we'll restart the machine and bring our terminal back up once the SSH server is up. Walk away, make some coffee!
 
@@ -124,3 +123,22 @@ Now we'll restart the machine and bring our terminal back up once the SSH server
 Ok, we're back. Lets run `sudo kubeadm init`
 
 Also it's worth mentioning, if you follow another tutorial or these issues don't happen for you, you can just skip along. I'm documenting what happened to me as I worked through the full setup.
+
+Success! We now have a join command that we're going to save into a local text file.
+
+We can now check the node by executing `kubectl get node`
+
+    NAME      STATUS     ROLES           AGE     VERSION
+    rainbow   NotReady   control-plane   4m46s   v1.25.4
+
+For some reason, the node is coming up as NotReady, so we'll investigate further
+
+Running `kubectl describe node rainbow` will result in a whole bunch of output. But our error is painfully clear:
+
+TODO
+
+Follow the instructions and we'll get going on the second node.
+
+### Node 2
+
+test
