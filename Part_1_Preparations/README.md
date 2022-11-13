@@ -1,4 +1,4 @@
-# Physical Preperations
+# Physical Preparations
 
 All the components needed for this setup are:
 

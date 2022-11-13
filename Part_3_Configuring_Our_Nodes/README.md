@@ -75,20 +75,16 @@ Then we'll execute `sudo netplan apply`.
 
 ## Installing our basic packages
 
-We're going to utilize automation to configure these nodes, so that these steps are easier to follow in the future, or if a node dies, or a new node gets added to the cluster.
-
-The main tool we're going to use to bootstrap these nodes is Ansible. The installation is pretty simple on Ubuntu.
+We're going to utilize some automation to configure these nodes, so that these steps are easier to follow in the future, or if a node dies, or a new node gets added to the cluster.
 
 We're going to execute the following commands in order
 
-- `sudo apt-add-repository ppa:ansible/ansible`
 - `sudo apt update`
 - `sudo apt-get update`
-- `sudo apt install ansible`
 - `sudo apt install neofetch`
 
-Once we have Ansible installed, we'll control the majority of our configuration through Ansible modules. We'll also be able to execute these remotely using Ansible if you have a machine set aside to do so. I'm executing all of this mostly from a Windows host, which doesn't natively execute Ansible, so some of this will be copy-pasted onto the machines.
-
-If you have existing nodes or VMs that are running Linux, you can set up an Ansible inventory and execute these configurations.
-
 We're also installing neofetch because it's a clever little way to print out the machine specifications whenever we want to remind ourselves what resources we have available. (That is, until Kube is configured!)
+
+## TODO -- disable swap across all nodes!
+
+I skipped this step for brevity, need to perform it and add it here. Probably after configuring the mounts on the big 6T box
