@@ -6,16 +6,7 @@ All the components needed for this setup are:
 2. One 16GB+ flash drive to install the Ubuntu server ISO on
 3. At least One keyboard, monitor, mouse combo
 
-My personal preparations are as follows:
-
-| Machine     | CPU | RAM |
-| ----------- | ----------- | ----------- |
-| Gaming Desktop 1      | i5 6500       | 16GB       |
-| Gaming Desktop 2      | AMD 8 core Bulldozer       | 8GB       |
-| School District Desktop   | Old i3        |4GB       |
-| Old HR Manager Desktop   | Old i3        |2GB       |
-
-Some of these are old personal machines, others came from eBay or friends of friends who were throwing away perfectly crappy computers!
+Some of my nodes are old personal machines, others came from eBay or friends of friends who were throwing away perfectly crappy computers!
 
 Now onto storage. I picked up a new 2TB 5400RPM WD Red NAS HDD, and a 500GB WD Blue SSD.
 
@@ -49,3 +40,11 @@ As they say, the hardest thing about computer science is naming things and off-b
 
 But we're going to try to set up the servers with the following hostnames; rainbow, oldie, school and hp
 
+Final cluster layout (in kube terms):
+
+| hostnam     | CPU | RAM | GPU | DISK |
+| ----------- | ----------- | ----------- | -- | -- |
+| rainbow      |  AMD FX-8120 (8) @ 3.100GHz | 7896MiB (8GB) | NVIDIA GeForce GTX 1050 Ti | 6001.3G
+| oldie      | Intel i5-6500 (4) @ 3.600GHz | 15889MiB (16GB) | Intel HD Graphics 530 | 221.6G
+| school   | Intel Core 2 Duo E8400 (2) @ 2.071GHz |3785MiB (4GB) | Intel 82Q35 Express | 232.9G
+| hp   | Intel i5-8400 (6) @ 4.000GHz |7772MiB (8GB) | Intel CoffeeLake-S GT2 [UHD Graphics 630] | 183.3G
