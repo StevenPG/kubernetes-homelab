@@ -47,15 +47,5 @@ I did this using [Rufus](https://rufus.ie/en/) on a Windows computer. I installe
 
 As they say, the hardest thing about computer science is naming things and off-by-one errors.
 
-But we're going to try to set up the servers with the following hostnames:
+But we're going to try to set up the servers with the following hostnames; rainbow, oldie, school and hp
 
-- rainbow 
-    - 8 core AMD Bulldozer
-    - hoster of content and doer of things
-- oldie (rename)
-    - i5 6500
-    - doer of things, but less important things
-- school (rename)
-    - School District Desktop
-    - doer of nonimportant things
-- (rename)
