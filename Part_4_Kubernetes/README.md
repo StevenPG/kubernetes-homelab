@@ -135,7 +135,17 @@ For some reason, the node is coming up as NotReady, so we'll investigate further
 
 Running `kubectl describe node rainbow` will result in a whole bunch of output. But our error is painfully clear:
 
-TODO
+    Conditions:
+    Type             Status  LastHeartbeatTime                 LastTransitionTime                Reason                       Message
+    ----             ------  -----------------                 ------------------                ------                       -------
+    MemoryPressure   False   Sun, 13 Nov 2022 18:53:08 +0000   Sun, 13 Nov 2022 18:47:53 +0000   KubeletHasSufficientMemory   kubelet has sufficient memory available
+    DiskPressure     False   Sun, 13 Nov 2022 18:53:08 +0000   Sun, 13 Nov 2022 18:47:53 +0000   KubeletHasNoDiskPressure     kubelet has no disk pressure
+    PIDPressure      False   Sun, 13 Nov 2022 18:53:08 +0000   Sun, 13 Nov 2022 18:47:53 +0000   KubeletHasSufficientPID      kubelet has sufficient PID available
+    Ready            False   Sun, 13 Nov 2022 18:53:08 +0000   Sun, 13 Nov 2022 18:47:53 +0000   KubeletNotReady              container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:Network plugin returns error: cni plugin not initialized
+
+Lets initialize the cni plugin so the cluster networking can start properly.
+
+--- CNI fix TODO
 
 Follow the instructions and we'll get going on the second node.
 
