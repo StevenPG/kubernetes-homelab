@@ -1,4 +1,4 @@
-# First things first!
+# First things first
 
 We need to get access to our nodes and then actually access them.
 
@@ -28,3 +28,62 @@ Each of the IP address and hostnames should be listed when you run nmap. (If the
 
 From here, we're going to execute our SSH commands. We recorded our username and password when we installed Ubuntu Server, so we have those on hand.
 
+`ssh user@ip-address`
+
+## Setting a static IP
+
+So that our nodes don't change IP address, we're going to set them up so that they request a static IP from the router each time they restart.
+
+First we're going to run `ip a` on each node. This will tell us wheat IP `eth0` is configured with currently. For simplicity, we'll make that the static local ip.
+
+Note, this is only for your local network, any guides or intent to have a static IP externally following these steps WILL NOT WORK.
+
+Once we know the IP we want to set (I'm doing this across 4 machines as I write this), navigate to the following folder `/etc/netplan`. This is the iterative configuration for setting up network components in this version of Ubuntu.
+
+Much like flyway or liquibase, we're going to ignore the pre-existing files (e.g.)
+
+    00-installer-config-wifi.yaml  00-installer-config.yaml
+
+and instead create a new file, prepended with 01-\<filename>
+
+Execute the following command:
+
+    sudo vi /etc/netplan/01-netcfg.yaml
+
+Add the following content into the file
+
+    network:
+    version: 2
+    renderer: networkd
+    ethernets:
+        eth0:
+            addresses:
+                - 192.168.1.212/24
+            nameservers:
+                addresses: [8.8.8.8, 8.8.4.4]
+            routes:
+                - to: default
+                  via: 192.168.1.2
+
+Then change the following fields:
+
+- ethernets.eth0.address = your preferred static internal IP
+- ethernets.eth0.nameservers.address = your preferred pair of DNS nameservers
+- ethernets.eth0.routes.via = your router's gateway ip
+
+Then we'll execute `sudo netplan apply`.
+
+## Installing our basic packages
+
+We're going to utilize automation to configure these nodes, so that these steps are easier to follow in the future, or if a node dies, or a new node gets added to the cluster.
+
+The main tool we're going to use to bootstrap these nodes is Ansible. The installation is pretty simple on Ubuntu.
+
+We're going to execute the following commands in order
+
+- `sudo apt-add-repository ppa:ansible/ansible`
+- `sudo apt update`
+- `sudo apt-get update`
+- `sudo apt install ansible`
+
+Once we have Ansible installed, we'll control the majority of our configuration through Ansible modules. We'll also be able to execute these remotely using Ansible if you have a machine set aside to do so.
