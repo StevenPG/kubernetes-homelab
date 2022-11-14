@@ -145,7 +145,27 @@ Running `kubectl describe node rainbow` will result in a whole bunch of output. 
 
 Lets initialize the cni plugin so the cluster networking can start properly.
 
---- CNI fix TODO
+We're gonna go over to the Calico page and run through the getting started docs.
+
+https://projectcalico.docs.tigera.io/getting-started/kubernetes/quickstart
+
+This tells us to run our kubeadm command with a new optional config, specifically
+
+    sudo kubeadm init --pod-network-cidr=192.168.0.0/16
+
+However, we're using 192.168.0.0/24 for our internal network, so we're going to point at 192.169.0.0/16.
+
+Then we're going to grab the remote Calico configs and push them into our new cluster.
+
+ TODO -- figure out the rest of the docs: https://projectcalico.docs.tigera.io/getting-started/kubernetes/quickstart
+
+    kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.24.5/manifests/tigera-operator.yaml
+
+    kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.24.5/manifests/custom-resources.yaml
+
+Then we'll print our pods and make sure eveyrthing worked.
+
+    watch kubectl get pods -n calico-system
 
 Follow the instructions and we'll get going on the second node.
 
