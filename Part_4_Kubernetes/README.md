@@ -163,9 +163,14 @@ Note, we may have to pull these files locally and configure them. For example, c
 
     kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.24.5/manifests/custom-resources.yaml
 
-Then we'll print our pods and make sure eveyrthing worked.
+Then we'll print our pods and make sure everything worked.
 
     watch kubectl get pods -n calico-system
+
+Now for the node to come up correctly, we need to allow the components that keep the control plane and etcd running by designating our node as a master node. We'll do this be tainting all the nodes using
+
+    kubectl taint nodes --all node-role.kubernetes.io/control-plane- node-role.kubernetes.io/master-
+
 
 Follow the instructions and we'll get going on the second node.
 
