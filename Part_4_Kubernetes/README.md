@@ -172,30 +172,22 @@ We can now check the node by executing `kubectl get node`
     NAME      STATUS     ROLES           AGE     VERSION
     rainbow   NotReady   control-plane   4m46s   v1.25.4
 
-For some reason, the node is coming up as NotReady, so we'll investigate further
+From here, we need to install our CNI plugins. We're going to use canal because it takes the best from Calico and Flannel. We can do this using two simple commands:
 
-Running `kubectl describe node rainbow` will result in a whole bunch of output. But our error is painfully clear:
+    curl https://raw.githubusercontent.com/projectcalico/calico/v3.24.5/manifests/canal.yaml -O
+    kubectl apply -f canal.yaml
 
-    Conditions:
-    Type             Status  LastHeartbeatTime                 LastTransitionTime                Reason                       Message
-    ----             ------  -----------------                 ------------------                ------                       -------
-    MemoryPressure   False   Sun, 13 Nov 2022 18:53:08 +0000   Sun, 13 Nov 2022 18:47:53 +0000   KubeletHasSufficientMemory   kubelet has sufficient memory available
-    DiskPressure     False   Sun, 13 Nov 2022 18:53:08 +0000   Sun, 13 Nov 2022 18:47:53 +0000   KubeletHasNoDiskPressure     kubelet has no disk pressure
-    PIDPressure      False   Sun, 13 Nov 2022 18:53:08 +0000   Sun, 13 Nov 2022 18:47:53 +0000   KubeletHasSufficientPID      kubelet has sufficient PID available
-    Ready            False   Sun, 13 Nov 2022 18:53:08 +0000   Sun, 13 Nov 2022 18:47:53 +0000   KubeletNotReady              container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:Network plugin returns error: cni plugin not initialized
+Now we watch the fireworks with `watch kubectl get pods --all-namespaces`
 
-Lets initialize the cni plugin so the cluster networking can start properly.
-
-We'll do this by installing calico using
-
-    kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
-
-We'll then watch everything start up using `watch kubectl get pods --all-namespaces`
-
-You should slowly see kube-* nodes, etcd, coredns and calico pods all begin starting up.
-
-Follow the instructions and we'll get going on the second node.
-
-### Node 2
-
-test
+After a little while, you should see everything up and running!
+    
+    NAMESPACE     NAME                                       READY   STATUS    RESTARTS   AGE
+    kube-system   calico-kube-controllers-798cc86c47-th574   1/1     Running   0          84s
+    kube-system   canal-4px6q                                2/2     Running   0          84s
+    kube-system   coredns-565d847f94-54qgj                   1/1     Running   0          13m
+    kube-system   coredns-565d847f94-5m6hj                   1/1     Running   0          13m
+    kube-system   etcd-rainbow                               1/1     Running   54         13m
+    kube-system   kube-apiserver-rainbow                     1/1     Running   53         13m
+    kube-system   kube-controller-manager-rainbow            1/1     Running   0          13m
+    kube-system   kube-proxy-24jrx                           1/1     Running   0          13m
+    kube-system   kube-scheduler-rainbow                     1/1     Running   59         13m
