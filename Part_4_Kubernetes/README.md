@@ -157,7 +157,7 @@ However, we're using 192.168.0.0/24 for our internal network, so we're going to 
 
 Then we're going to grab the remote Calico configs and push them into our new cluster.
 
- TODO -- figure out the rest of the docs: https://projectcalico.docs.tigera.io/getting-started/kubernetes/quickstart
+Note, we may have to pull these files locally and configure them. For example, custom-resources.yaml contains `192.168.0.0/16` as the default. Since we're using a different CIDR, we'll need to update this file and run our local copy.
 
     kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.24.5/manifests/tigera-operator.yaml
 
