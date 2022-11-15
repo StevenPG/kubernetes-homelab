@@ -33,9 +33,46 @@ Installing docker is fairly straightforward
 
 By the end of this section, you should see the "Hello From Docker!" results from executing hello-world.
 
+#### CRI-O
+
+As of version 1.24 of Kubernetes, the dockershim is removed and therefore, while we can use docker as a generic runtime engine, we can't use it to underpin Kubernetes. So we're going to use cri-o instead.
+
+Following this guide, we'll perform the installation: https://computingforgeeks.com/install-cri-o-container-runtime-on-ubuntu-linux/
+
+    OS=xUbuntu_20.04
+    CRIO_VERSION=1.23
+    echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/$OS/ /"|sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+    echo "deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/$CRIO_VERSION/$OS/ /"|sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable:cri-o:$CRIO_VERSION.list
+
+    # Import GPG keys
+    curl -L https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:$CRIO_VERSION/$OS/Release.key | sudo apt-key add -
+    curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/$OS/Release.key | sudo apt-key add -
+
+Now that we've added the latest CRI-O packages, we'll install them.
+
+    # Install packages
+    sudo apt update
+    sudo apt install cri-o cri-o-runc
+
+    # Check version using
+    apt show cri-o
+
+Similar to how we set up docker, we'll start cri-o-runc
+
+    sudo systemctl enable crio.service
+    sudo systemctl start crio.service
+    # Check we're up and running with
+    systemctl status crio
+
+Much like the `docker` command, cri-o has the crictl tool, we'll install that with
+
+    sudo apt install cri-tools
+    # Check installation
+    sudo crictl info
+
 #### Kube Components
 
-Same as docker, these commands are pretty simple to execute.
+Same as docker and cri-o, these commands are pretty simple to execute.
 
     sudo apt-get update
     sudo apt-get install -y apt-transport-https ca-certificates curl
@@ -120,7 +157,11 @@ Now we'll restart the machine and bring our terminal back up once the SSH server
 
 ...
 
-Ok, we're back. Lets run `sudo kubeadm init`
+Ok, we're back. Lets run `sudo kubeadm init` with some additional bits.
+
+We set our cgroup driver to systemd, which means all we need to do to link up with cri-o is the following:
+
+    sudo kubeadm init --pod-network-cidr=192.169.0.0/16 --cri-socket=unix:///var/run/crio/crio.sock
 
 Also it's worth mentioning, if you follow another tutorial or these issues don't happen for you, you can just skip along. I'm documenting what happened to me as I worked through the full setup.
 
@@ -145,32 +186,13 @@ Running `kubectl describe node rainbow` will result in a whole bunch of output. 
 
 Lets initialize the cni plugin so the cluster networking can start properly.
 
-We're gonna go over to the Calico page and run through the getting started docs.
+We'll do this by installing calico using
 
-https://projectcalico.docs.tigera.io/getting-started/kubernetes/quickstart
+    kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 
-This tells us to run our kubeadm command with a new optional config, specifically
+We'll then watch everything start up using `watch kubectl get pods --all-namespaces`
 
-    sudo kubeadm init --pod-network-cidr=192.168.0.0/16
-
-However, we're using 192.168.0.0/24 for our internal network, so we're going to point at 192.169.0.0/16.
-
-Then we're going to grab the remote Calico configs and push them into our new cluster.
-
-Note, we may have to pull these files locally and configure them. For example, custom-resources.yaml contains `192.168.0.0/16` as the default. Since we're using a different CIDR, we'll need to update this file and run our local copy.
-
-    kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.24.5/manifests/tigera-operator.yaml
-
-    kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.24.5/manifests/custom-resources.yaml
-
-Then we'll print our pods and make sure everything worked.
-
-    watch kubectl get pods -n calico-system
-
-Now for the node to come up correctly, we need to allow the components that keep the control plane and etcd running by designating our node as a master node. We'll do this be tainting all the nodes using
-
-    kubectl taint nodes --all node-role.kubernetes.io/control-plane- node-role.kubernetes.io/master-
-
+You should slowly see kube-* nodes, etcd, coredns and calico pods all begin starting up.
 
 Follow the instructions and we'll get going on the second node.
 
