@@ -50,3 +50,7 @@ Just like that, we have an additional \<none> in our cluster when we look at our
     kubectl label node oldie node-role.kubernetes.io/worker=worker
 
 Now oldie is labeled a worker (as configured), and we have a perfectly happy two node cluster, one control-plane/etcd/worker node, and one dedicated worker node.
+
+    NAME      STATUS   ROLES           AGE   VERSION
+    oldie     Ready    worker          30m   v1.25.4
+    rainbow   Ready    control-plane   40m   v1.25.4
