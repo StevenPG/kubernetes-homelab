@@ -180,7 +180,7 @@ From here, we need to install our CNI plugins. We're going to use canal because 
 Now we watch the fireworks with `watch kubectl get pods --all-namespaces`
 
 After a little while, you should see everything up and running!
-    
+ 
     NAMESPACE     NAME                                       READY   STATUS    RESTARTS   AGE
     kube-system   calico-kube-controllers-798cc86c47-th574   1/1     Running   0          84s
     kube-system   canal-4px6q                                2/2     Running   0          84s
