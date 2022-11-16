@@ -161,7 +161,14 @@ Ok, we're back. Lets run `sudo kubeadm init` with some additional bits.
 
 We set our cgroup driver to systemd, which means all we need to do to link up with cri-o is the following:
 
+    # We could run this command, however we may run into issues with certain tools that expect more kube configuration
     sudo kubeadm init --pod-network-cidr=192.169.0.0/16 --cri-socket=unix:///var/run/crio/crio.sock
+
+So we're going to run the following command instead
+
+    sudo kubeadm init --config kubeadm-config.yaml
+
+This kubeadm config yaml contains an additional SAN and other configurations that should handle any missing pieces. We can also use a configuration file like this to join to the kubeadm cluster! All of the kubeadm config options are available here: https://pkg.go.dev/k8s.io/kubernetes/cmd/kubeadm/app/apis/kubeadm/v1beta2#hdr-Migration_from_old_kubeadm_config_versions
 
 Also it's worth mentioning, if you follow another tutorial or these issues don't happen for you, you can just skip along. I'm documenting what happened to me as I worked through the full setup.
 
