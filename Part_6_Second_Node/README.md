@@ -54,3 +54,39 @@ Now oldie is labeled a worker (as configured), and we have a perfectly happy two
     NAME      STATUS   ROLES           AGE   VERSION
     oldie     Ready    worker          30m   v1.25.4
     rainbow   Ready    control-plane   40m   v1.25.4
+
+However, we want oldie to be a master node. So we're going to clean it out by first going to rainbow (our sole master node) and running the following commands
+
+    kubectl drain oldie --ignore-daemonsets
+    kubectl delete node oldie
+
+Now on oldie, we're going to run `sudo kubeadm reset --cri-socket=unix:///var/run/crio/crio.sock`
+
+This will clean out oldie so we can rerun the steps needed to make oldie into a second master.
+
+To prepare for our new master node, we also run:
+
+    sudo kubeadm init phase upload-certs --upload-certs --config kubeadm-config.yaml
+    [upload-certs] Storing the certificates in Secret "kubeadm-certs" in the "kube-system" Namespace
+    [upload-certs] Using certificate key:
+    someKey
+
+This is going to print out our certificate key. Next, we'll run `sudo kubeadm token create --print-join-command` on our main node.
+
+The result will be 
+
+    kubeadm join 192.168.1.201:6443 --token some.token --discovery-token-ca-cert-hash sha256:someHash
+
+On our other node, we're going to add some details, specifically our certificate-key from earlier and an additional `--control-plane` command.
+
+     sudo kubeadm join 192.168.1.201:6443 --token some.token --discovery-token-ca-cert-hash sha256:someSha --control-plane --certificate-key=someCertKey --cri-socket=unix:///var/run/crio/crio.sock
+
+Now we wait!
+
+Follow the steps to get access to the 2 node master cluster using kubectl.
+
+Next, lets remove the taint on oldie like we did on rainbow. From rainbow, run the following
+
+    kubectl taint nodes <nodeName> node-role.kubernetes.io/control-plane:NoSchedule-
+
+Section 7 will be setup of the next two nodes.

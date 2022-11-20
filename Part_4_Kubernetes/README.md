@@ -166,7 +166,9 @@ We set our cgroup driver to systemd, which means all we need to do to link up wi
 
 So we're going to run the following command instead
 
-    sudo kubeadm init --config kubeadm-config.yaml
+    sudo kubeadm init --config kubeadm-config.yaml --upload-certs
+
+Since we've provided a controlPlane URL in our config file, other nodes are eligible to be masters (eventually). We're going to run `--upload-certs` so that other nodes will be able to download our certs. We'll see this in Step 6!
 
 This kubeadm config yaml contains an additional SAN and other configurations that should handle any missing pieces. We can also use a configuration file like this to join to the kubeadm cluster! All of the kubeadm config options are available here: https://pkg.go.dev/k8s.io/kubernetes/cmd/kubeadm/app/apis/kubeadm/v1beta2#hdr-Migration_from_old_kubeadm_config_versions
 
