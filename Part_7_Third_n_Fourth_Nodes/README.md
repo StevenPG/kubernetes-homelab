@@ -9,3 +9,9 @@ For the sake of brevity, I won't be rehasing the steps here, but will present th
     oldie     Ready    control-plane   16m     v1.25.4   192.168.1.199   <none>        Ubuntu 22.04.1 LTS   5.15.0-53-generic   cri-o://1.23.4
     rainbow   Ready    control-plane   17m     v1.25.4   192.168.1.201   <none>        Ubuntu 22.04.1 LTS   5.15.0-53-generic   cri-o://1.23.4
     school    Ready    control-plane   6m40s   v1.25.4   192.168.1.202   <none>        Ubuntu 22.04.1 LTS   5.15.0-53-generic   containerd://1.5.9-0ubuntu3
+
+Also, jokes on you (and me), for whatever reason, containerd doesn't seem to be working, so my school and hp nodes are failing to bring any containers up, while the cri-o nodes are working fine. So we're going to remove docker from hp and school using the following commands
+
+    sudo apt-get remove containerd 
+    sudo apt-get remove --auto-remove containerd 
+    sudo apt-get purge containerd 
