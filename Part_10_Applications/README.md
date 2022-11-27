@@ -8,5 +8,6 @@ Generally, to avoid really needing to work exclusively from the command line, I 
 
 Now, onto the actual applications!
 
-## Unifi Controller
+## Applications
 
+Each application contains a folder in this subfolder for Part_10 that contains it's deployment configurations or READMEs.
