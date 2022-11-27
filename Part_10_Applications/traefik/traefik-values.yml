@@ -4,6 +4,9 @@ image:
   # defaults to appVersion
   pullPolicy: Always
 
+deployment:
+  replicas: 3
+
 # Create a default IngressClass for Traefik
 ingressClass:
   enabled: true
