@@ -24,14 +24,5 @@ logs:
   access:
     # To enable access logs
     enabled: true
-
-ports:
-  traefik:
-    port: 9000
-    hostPort: 9000
-  web:
-    port: 8000
-    hostPort: 8000
-  websecure:
-    port: 8443
-    hostPort: 8443
+nodeSelector: 
+  kubernetes.io/hostname: oldie
