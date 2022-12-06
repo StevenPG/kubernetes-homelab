@@ -16,6 +16,10 @@ ingressClass:
 ingressRoute:
   dashboard:
     enabled: true
+# This should mount traefik directly to the host so it can function as a 
+# reverse proxy for the server itself. Running it on each node will functionally
+# created a pseudo-load-balancing reverse prox!
+hostNetwork: true
 
 # Logs
 # https://docs.traefik.io/observability/logs/
@@ -27,5 +31,5 @@ logs:
   access:
     # To enable access logs
     enabled: true
-nodeSelector: 
-  kubernetes.io/hostname: oldie
+# nodeSelector: 
+#   kubernetes.io/hostname: oldie
