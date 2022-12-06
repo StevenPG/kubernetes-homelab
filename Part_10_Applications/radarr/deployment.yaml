@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radarr
+  labels:
+    app: radarr
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: radarr
+  template:
+    metadata:
+      labels:
+        app: radarr
+    spec:
+      initContainers:
+        - name: config-radarr
+          image: docker.io/ubuntu:groovy
+          command: ["/init-radarr/init-radarr.sh"]
+          volumeMounts:
+            - name: init-files-radarr
+              mountPath: /init-radarr
+            - name: mediaserver-volume
+              mountPath: /radarr-config
+              subPath: "./radarr"
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+      containers:
+        - name: radarr
+          envFrom:
+            - configMapRef:
+                name: radarr-config
+          image: "docker.io/linuxserver/radarr"
+          imagePullPolicy: Always
+          readinessProbe:
+            tcpSocket:
+              port: 7878
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          ports:
+            - name: radarr-port
+              containerPort: {{ .Values.radarr.container.port }}
+              protocol: TCP
+          volumeMounts:
+            - name: mediaserver-volume
+              mountPath: "/config"
+              subPath: "{{ .Values.general.storage.subPaths.config }}/radarr"
+            - name: mediaserver-volume
+              mountPath: "/downloads"
+              subPath: "{{ .Values.general.storage.subPaths.downloads }}"
+            - name: mediaserver-volume
+              mountPath: "/movies"
+              subPath: "{{ .Values.general.storage.subPaths.movies }}"
+      volumes:
+        - name: mediaserver-volume
+          persistentVolumeClaim:
+            claimName: radarr-mediaserver
+        - name: init-files-radarr
+          configMap:
+            defaultMode: 493
+            name: init-radarr-cm
