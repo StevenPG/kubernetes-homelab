@@ -118,3 +118,13 @@ We can also remove all of the installations by executing
 Just like that, we're setup! We now have storage from any node on the cluster. This theoretically means that we can run any workload on any node and there should be no reason it doesn't work.
 
 However, we'll likely add taints for performance reasons, since some machines are incredibly slow while others are much more powerful.
+
+## Update!!
+
+So we had a drive die! This is a dark day for the homelab, but thankfully, knew this drive had issues so we didn't put anything important on it.
+
+In the future, we would've resolved this by having a software/hardware RAID setup.
+
+So, we're going to resolve this issue by ripping the drive out of the box (done), and then removing the NFS share using `helm uninstall sde-nfs-client`.
+
+From there, our cluster should be back and perfectly healthy.
